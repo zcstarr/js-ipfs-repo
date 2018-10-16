@@ -2,6 +2,7 @@ image: node:10
 stages:
   - check
   - test
+  - cov
 
 variables:
   DOCKER_DRIVER: overlay2
@@ -14,12 +15,15 @@ variables:
 
 before_script:
   # - yarn config set cache-folder .yarn-cache
-  - npm ci 
+  - npm ci -q
 
 check:
   stage: check
   script:
   - npm run lint
+  # - npm run dep-check
+  - npm install --no-lockfile @commitlint/config-conventional @commitlint/cli --save-dev
+  - npx commitlint --extends=@commitlint/config-conventional --from=$CI_COMMIT_BEFORE_SHA --to=$CI_COMMIT_SHA
 
 test-node-8:
   stage: test
@@ -30,7 +34,11 @@ test-node-8:
 test-node-10:
   stage: test
   script:
-  - npm run test:node
+    - COVERAGE=TRUE npx nyc npm run test:node
+  artifacts:
+    name: "node"
+    paths:
+      - .nyc_output/
 
 test-browser-chrome:
   image: hugomrdias/node-chrome:test
@@ -43,3 +51,11 @@ test-browser-firefox:
   stage: test
   script:
     - AEGIR_BROWSERS=FirefoxHeadless npm run test:browser
+
+cov:
+  stage: cov
+  script: 
+    - ls
+    - npx nyc report
+  dependencies:
+    - test-node-10

@@ -1,5 +1,5 @@
 docs
-
+.nyc_output
 test/test-repo-for*
 .vscode
 .eslintrc
