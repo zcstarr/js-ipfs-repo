@@ -20,7 +20,6 @@ check:
   stage: check
   script:
   - npm run lint
-  - npm run dep-check
 
 test-node-8:
   stage: test
