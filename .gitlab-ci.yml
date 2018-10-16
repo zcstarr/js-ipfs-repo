@@ -34,7 +34,7 @@ test-node-8:
 test-node-10:
   stage: test
   script:
-    - COVERAGE=TRUE npx nyc npm run test:node
+    - COVERAGE=TRUE npx nyc --reporter=none npm run test:node
   artifacts:
     name: "node"
     paths:
