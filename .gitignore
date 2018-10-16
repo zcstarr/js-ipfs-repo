@@ -1,6 +1,4 @@
 docs
-yarn.lock
-package-lock.json
 
 test/test-repo-for*
 .vscode
