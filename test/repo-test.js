@@ -12,7 +12,7 @@ module.exports = (repo) => {
     it('check if Repo exists', (done) => {
       repo.exists((err, exists) => {
         expect(err).to.not.exist()
-        expect(exists).to.equal(true)
+        expect(exists).to.equal(false)
         done()
       })
     })

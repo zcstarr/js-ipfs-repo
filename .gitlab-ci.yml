@@ -29,14 +29,16 @@ test-node-8:
   stage: test
   image: node:8
   script:
-  - npm run test:node
+    - COVERAGE=TRUE npx nyc -s npm run test:node
+  artifacts:
+    paths:
+      - .nyc_output/
 
 test-node-10:
   stage: test
   script:
-    - COVERAGE=TRUE npx nyc --reporter=none npm run test:node
+    - COVERAGE=TRUE npx nyc -s npm run test:node
   artifacts:
-    name: "node"
     paths:
       - .nyc_output/
 
@@ -45,17 +47,41 @@ test-browser-chrome:
   stage: test
   script:
     - AEGIR_BROWSERS=ChromeDocker npm run test:browser
+  artifacts:
+    reports:
+      junit: junit-report-browser-*.xml
 
 test-browser-firefox:
   image: hugomrdias/node-firefox:test
   stage: test
   script:
     - AEGIR_BROWSERS=FirefoxHeadless npm run test:browser
+  artifacts:
+    reports:
+      junit: junit-report-browser-*.xml
 
 cov:
   stage: cov
   script: 
-    - ls
-    - npx nyc report
+    - ls -al
+    - npx nyc report --reporter text-summary --reporter html
   dependencies:
     - test-node-10
+  artifacts:
+    paths:
+      - coverage/
+  coverage: '/Lines        : \d+\.\d+/'
+
+cov2:
+  stage: cov
+  script: 
+    - ls -al
+    - npx nyc report --reporter text-summary --reporter html
+  dependencies:
+    - test-node-10
+    - test-node-8
+  artifacts:
+    paths:
+      - coverage/
+      - .nyc_output/
+  coverage: '/Lines        : \d+\.\d+/'
