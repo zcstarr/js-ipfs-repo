@@ -41,6 +41,8 @@
     "aegir": "^15.2.0",
     "chai": "^4.1.2",
     "dirty-chai": "^2.0.1",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "karma-coverage-istanbul-reporter": "^2.0.4",
     "lodash": "^4.17.5",
     "memdown": "^1.4.1",
     "multihashes": "~0.4.13",

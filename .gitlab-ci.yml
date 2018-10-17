@@ -49,16 +49,21 @@ test-browser-chrome:
     - AEGIR_BROWSERS=ChromeDocker npm run test:browser
   artifacts:
     reports:
-      junit: junit-report-browser-*.xml
+      junit: junit-report-*.xml
 
 test-browser-firefox:
   image: hugomrdias/node-firefox:test
   stage: test
   script:
+    - cd node_modules/aegir
+    - npm i --save-dev karma-coverage-istanbul-reporter
+    - cd ../..
     - AEGIR_BROWSERS=FirefoxHeadless npm run test:browser
   artifacts:
+    paths:
+      - coverage/
     reports:
-      junit: junit-report-browser-*.xml
+      junit: junit-report-*.xml
 
 cov:
   stage: cov
