@@ -81,10 +81,12 @@ cov2:
   stage: cov
   script: 
     - ls -al
+    - cp coverage/coverage-final.json .nyc_output/browser.json
     - npx nyc report --reporter text-summary --reporter html
   dependencies:
     - test-node-10
     - test-node-8
+    - test-browser-firefox
   artifacts:
     paths:
       - coverage/
