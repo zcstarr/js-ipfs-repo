@@ -61,7 +61,7 @@
     "interface-datastore": "~0.6.0",
     "ipfs-block": "~0.8.0",
     "just-safe-set": "^2.1.0",
-    "multiaddr": "multiformats/js-multiaddr#feat/bundle-size",
+    "multiaddr": "^6.0.3",
     "proper-lockfile": "^3.2.0",
     "pull-stream": "^3.6.9",
     "sort-keys": "^2.0.0"
